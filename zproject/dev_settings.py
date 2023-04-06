@@ -1,9 +1,10 @@
 import os
 import pwd
-from typing import Dict, Optional, Set, Tuple
+from typing import Any, Dict, Optional, Set, Tuple
 
 from scripts.lib.zulip_tools import deport
 from zproject.settings_types import SCIMConfigDict
+from .config import get_secret
 
 ZULIP_ADMINISTRATOR = "desdemona+admin@zulip.com"
 
@@ -189,5 +190,32 @@ SCIM_CONFIG: Dict[str, SCIMConfigDict] = {
         "bearer_token": "token1234",
         "scim_client_name": "test-scim-client",
         "name_formatted_included": True,
+    }
+}
+
+## JWT authentication.
+##
+## JWT authentication is supported both to transparently log users
+## into Zulip or to fetch users' API keys. The JWT secret key and
+## algorithm must be configured here.
+##
+## See https://zulip.readthedocs.io/en/latest/production/authentication-methods.html#jwt
+JWT_AUTH_KEYS: Dict[str, Any] = {
+    # Subdomain for which this JWT configuration will apply.
+    "nextner": {
+        "key": get_secret("jwt_auth_key"),
+    },
+    "": {
+        "key": get_secret("jwt_auth_key"),
+    },
+    "zulip": {
+        # Shared secret key used to validate jwt tokens, which should be stored
+        # in zulip-secrets.conf and is read by the get_secret call below.
+        # The key needs to be securely, randomly generated. Note that if you're
+        # using the default HS256 algorithm, per RFC 7518, the key needs
+        # to have at least 256 bits of entropy.
+        "key": get_secret("jwt_auth_key"),
+        # Algorithm with which the JWT token are signed.
+        "algorithms": ["HS256"],
     }
 }

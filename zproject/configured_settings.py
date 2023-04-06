@@ -16,7 +16,8 @@ if PRODUCTION:
 else:
     # For the Dev VM environment, we use the same settings as the
     # sample prod_settings.py file, with a few exceptions.
-    from .prod_settings_template import *  # noqa: F403 isort: skip
+    # from .prod_settings_template import *  # noqa: F403 isort: skip
+    # from .dev_settings import *  # noqa: F403 isort: skip
     from .dev_settings import *  # noqa: F403 isort: skip
 
 # Do not add any code after these wildcard imports!  Add it to
