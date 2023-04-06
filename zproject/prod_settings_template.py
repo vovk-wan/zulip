@@ -143,14 +143,14 @@ EMAIL_GATEWAY_IMAP_FOLDER = "INBOX"
 ## initial realm and user.
 AUTHENTICATION_BACKENDS: Tuple[str, ...] = (
     "zproject.backends.EmailAuthBackend",  # Email and password; just requires SMTP setup
-    # "zproject.backends.GoogleAuthBackend",  # Google auth, setup below
-    # "zproject.backends.GitHubAuthBackend",  # GitHub auth, setup below
-    # "zproject.backends.GitLabAuthBackend",  # GitLab auth, setup below
-    # "zproject.backends.AzureADAuthBackend",  # Microsoft Azure Active Directory auth, setup below
-    # "zproject.backends.AppleAuthBackend",  # Apple auth, setup below
-    # "zproject.backends.SAMLAuthBackend",  # SAML, setup below
-    # "zproject.backends.ZulipLDAPAuthBackend",  # LDAP, setup below
-    # "zproject.backends.ZulipRemoteUserBackend",  # Local SSO, setup docs on readthedocs
+    "zproject.backends.GoogleAuthBackend",  # Google auth, setup below
+    "zproject.backends.GitHubAuthBackend",  # GitHub auth, setup below
+    "zproject.backends.GitLabAuthBackend",  # GitLab auth, setup below
+    "zproject.backends.AzureADAuthBackend",  # Microsoft Azure Active Directory auth, setup below
+    "zproject.backends.AppleAuthBackend",  # Apple auth, setup below
+    "zproject.backends.SAMLAuthBackend",  # SAML, setup below
+    "zproject.backends.ZulipLDAPAuthBackend",  # LDAP, setup below
+    "zproject.backends.ZulipRemoteUserBackend",  # Local SSO, setup docs on readthedocs
     # "zproject.backends.GenericOpenIdConnectBackend",  # Generic OIDC integration, setup below
 )
 
@@ -543,19 +543,25 @@ SOCIAL_AUTH_SAML_SUPPORT_CONTACT = {
 ## algorithm must be configured here.
 ##
 ## See https://zulip.readthedocs.io/en/latest/production/authentication-methods.html#jwt
-# JWT_AUTH_KEYS: Dict[str, Any] = {
-#     # Subdomain for which this JWT configuration will apply.
-#     "zulip": {
-#         # Shared secret key used to validate jwt tokens, which should be stored
-#         # in zulip-secrets.conf and is read by the get_secret call below.
-#         # The key needs to be securely, randomly generated. Note that if you're
-#         # using the default HS256 algorithm, per RFC 7518, the key needs
-#         # to have at least 256 bits of entropy.
-#         "key": get_secret("jwt_auth_key"),
-#         # Algorithm with which the JWT token are signed.
-#         "algorithms": ["HS256"],
-#     }
-# }
+JWT_AUTH_KEYS: Dict[str, Any] = {
+    # Subdomain for which this JWT configuration will apply.
+    "nextner": {
+        "key": get_secret("jwt_auth_key"),
+    },
+    "": {
+        "key": get_secret("jwt_auth_key"),
+    },
+    "zulip": {
+        # Shared secret key used to validate jwt tokens, which should be stored
+        # in zulip-secrets.conf and is read by the get_secret call below.
+        # The key needs to be securely, randomly generated. Note that if you're
+        # using the default HS256 algorithm, per RFC 7518, the key needs
+        # to have at least 256 bits of entropy.
+        "key": get_secret("jwt_auth_key"),
+        # Algorithm with which the JWT token are signed.
+        "algorithms": ["HS256"],
+    }
+}
 
 ################
 ## Service configuration
